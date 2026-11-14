@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>PaperScore — ML OMR grader</title>
+    <style>
+        :root {
+            font-family: system-ui, sans-serif;
+            color: #20304a;
+            background: #f2f5f8
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0
+        }
+
+        header {
+            background: #173458;
+            color: white;
+            padding: 24px max(20px, calc((100vw - 1100px)/2))
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 27px
+        }
+
+        header p {
+            margin: 6px 0 0;
+            color: #d0e0f0
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: auto;
+            padding: 22px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dde5ed;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 18px #20304a08
+        }
+
+        h2 {
+            font-size: 19px;
+            margin: 0 0 10px
+        }
+
+        p,
+        li {
+            line-height: 1.5
+        }
+
+        button,
+        .btn {
+            background: #205d91;
+            color: white;
+            border: 0;
+            border-radius: 7px;
+            padding: 10px 15px;
+            font: inherit;
+            cursor: pointer;
+            display: inline-block
+        }
+
+        button:hover,
+        .btn:hover {
+            background: #174a75
+        }
+
+        button.secondary {
+            background: #e8eef5;
+            color: #203b59
+        }
+
+        button:disabled {
+            opacity: .45;
+            cursor: not-allowed
+        }
+
+        textarea,
+        input,
+        select {
+            font: inherit;
+            border: 1px solid #bccbda;
+            border-radius: 6px;
+            padding: 8px
+        }
+
+        textarea {
+            width: 100%;
+            height: 85px
+        }
+
+        input[type=file] {
+            width: 100%;
+            margin: 8px 0
+        }
+
+        label {
+            font-weight: 600
+        }
+
+        small,
+        .muted {
+            color: #607084
+        }
+
+        .note {
+            background: #fff6dc;
+            border-left: 4px solid #d5a52d;
+            padding: 12px
+        }
+
+        .error {
+            color: #a12c2c
+        }
+
+        .success {
+            color: #176b4c
+        }
+
+        .row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+        .canvaswrap {
+            overflow: auto;
+            background: #e6ebef;
+            text-align: center
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            touch-action: manipulation
+        }
+
+        .answers {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+            gap: 6px
+        }
+
+        .answer {
+            padding: 7px;
+            background: #f4f7fa;
+            border-radius: 5px;
+            font-size: 14px
+        }
+
+        .answer.flag {
+            background: #fff0c7
+        }
+
+        .answer fieldset {
+            margin: 0;
+            padding: 0;
+            border: 0
+        }
+
+        .answer legend {
+            font-weight: 600
+        }
+
+        .answer .row {
+            gap: 6px
+        }
+
+        .answer label {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            min-height: 32px
+        }
+
+        .answer input {
+            margin: 0
+        }
+
+        .score {
+            font-size: 25px;
+            font-weight: 750;
+            color: #174f78
+        }
+
+        [hidden] {
+            display: none !important
+        }
+
+        .page-slot {
+            padding: 8px 12px;
+            background: #e8eef5;
+            border-radius: 6px;
+            font-weight: 600
+        }
+
+        .page-slot.ready {
+            background: #dbf2e6;
+            color: #176b4c
+        }
+
+        #sheet {
+            display: none
+        }
+
+        @media(max-width:700px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media print {
+            body>*:not(#sheet) {
+                display: none !important
+            }
+
+            #sheet {
+                display: block
+            }
+
+            body {
+                background: white;
+                margin: 0
+            }
+
+            @page {
+                size: A4;
+                margin: 0
+            }
+
+            #sheet svg {
+                display: block;
+                width: 210mm;
+                height: 297mm
+            }
+        }
+
+        .answer .confirm {
+            padding: 5px 8px;
+            font-size: 12px
+        }
+
+        .answer .reason {
+            display: block;
+            color: #815500;
+            font-size: 11px
+        }
+
+        .statusline {
+            min-height: 24px
+        }
+        .answers { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 12px; }
+        .answer { padding: 12px; border: 1px solid #dce5ed; }
+        .answer legend { font-size: 16px; margin-bottom: 8px; }
+        .response-crop { width: 100%; height: auto; display: block; background: white; border: 1px solid #cbd7e3; border-radius: 5px; margin: 6px 0; }
+        .detected-options { margin: 6px 0 10px; font-size: 14px; }
+        .crop-missing { padding: 16px; margin: 6px 0; background: #e8eef5; color: #607084; }
+        .answer .row { gap: 12px; }
+        .review-group { grid-column: 1 / -1; margin: 10px 0 0; font-size: 17px; }
+        .page-previews { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+        .page-previews figure { margin: 0; min-width: 0; border: 1px solid #dce5ed; border-radius: 7px; overflow: hidden; background: #edf2f7; }
+        .page-previews figcaption { padding: 10px; font-weight: 600; }
+        .page-previews canvas { display: block; width: 100%; height: auto; background: white; }
+        .page-previews .page-empty { padding: 24px 12px; color: #607084; text-align: center; }
+        #corrections { margin: 18px 0; border: 2px solid #d5a52d; border-radius: 8px; padding: 16px; }
+        .correction-cards { display: grid; gap: 14px; margin-bottom: 16px; }
+        .correction-card { border: 1px solid #cbd7e3; border-radius: 7px; padding: 12px; }
+        .correction-card.flag { background: #fff3cd; }
+        .correction-card h4 { margin: 0 0 8px; }
+        .correction-card input[type=number] { width: 90px; }
+        .correction-options { display: flex; flex-wrap: wrap; gap: 12px; border: 0; padding: 8px 0; }
+        .correction-options label { display: inline-flex; gap: 5px; align-items: center; min-height: 34px; }
+        .correction-original img, .correction-replacement { display: block; width: 100%; max-width: 560px; height: auto; }
+        .corrected-answer { background: #dbf2e6; color: #176b4c; padding: 8px; }
+        #confirmCorrectionSection { margin-top: 16px; }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>PaperScore</h1>
+        <p>Read, review and grade your two-page OMR sheets.</p>
+    </header>
+    <main class="wrap">
+        <div class="note"><strong>ML bubble reader</strong> · A small neural network reads filled bubbles and ticks on
+            this sheet. It runs on your device. Trained with generated and augmented examples; check uncertain readings and test real
+            photos before grading a class. <span id="modelstatus" role="status">Loading model…</span></div>
+        <div class="grid" style="margin-top:18px">
+            <section class="card">
+                <h2>1. Set up your test</h2>
+                <p><label for="count">Number of questions (1–60)</label> <input id="count" type="number" min="1"
+                        max="60" value="60" style="width:85px"></p>
+                <p>Enter one entry per question, separated by spaces or commas. Use A, B, C or D for one option, or A+C
+                    for a question that requires both A and C.</p><textarea id="key" aria-label="Answer key"
+                    placeholder="A B A+C D …"></textarea>
+                <p><label for="keyCsv">Or upload a CSV answer key</label><input id="keyCsv" type="file"
+                        accept=".csv,text/csv"><small>Columns: question,answer · use A+C for multiple required options.
+                        <a href="./sample-key.csv" download>Download an example CSV</a></small></p>
+                <div class="row"><button id="savekey">Save answer key</button><span id="keystatus" class="muted">No key
+                        saved</span></div>
+                <p class="muted"><small>Saved in this browser on this device. Each question earns 1 point when all and
+                        only the options in the key are marked.</small></p>
+            </section>
+            <section class="card">
+                <h2>2. Download the answer sheet</h2>
+                <p>Download and print both A4 pages at <strong>actual size / 100%</strong>. Students should fill each
+                    chosen bubble fully. Keep the four corner markers visible on each page.</p><a class="btn"
+                    href="./PaperScore_OMR_Revised.pdf" download>Download blank answer sheet (PDF)</a>
+                <p class="muted"><small>Photograph the entire flat sheet in good light. Use Take a photo on your phone,
+                        or choose an existing image or PDF.</small></p>
+            </section>
+        </div>
+        <section class="card">
+            <h2>3. Upload a completed sheet</h2>
+            <div class="row"><label for="student">Student name</label><input
+                    id="student" placeholder="Optional when a roll number is present">
+                <label for="rollNumber">Roll number</label><input id="rollNumber"
+                    placeholder="Read automatically from the sheet" autocomplete="off" spellcheck="false">
+                <button id="confirmRoll" type="button" class="secondary" hidden>Confirm roll number</button>
+            </div>
+            <p id="rollStatus" class="muted statusline" role="status" aria-live="polite">Roll numbers are read on this device. Enter a name or roll number to save.</p>
+            <div id="rollSuggestions" class="row" aria-label="Roll-number candidates"></div>
+            <p><label for="rollRoster">Roll roster (CSV, kept on this device)</label>
+                <input id="rollRoster" type="file" accept=".csv,text/csv,text/plain">
+                <small id="rosterStatus" role="status"></small></p>
+            <img id="rollPreview" class="response-crop" style="max-width:420px" alt="Roll-number field from the uploaded sheet" hidden>
+            <div class="row" style="margin:14px 0"><button id="uploadP1" type="button">Upload Page 1 ·
+                    Q1–30</button><button id="uploadP2" type="button">Upload Page 2 · Q31–60</button><button
+                    id="uploadPhotos" type="button">Upload both photos (JPG/PNG)</button><button
+                    id="uploadPdf" class="secondary" type="button">Upload both pages (PDF)</button></div>
+            <div class="row" aria-live="polite"><span id="slot1" class="page-slot">Page 1 · missing</span><span
+                    id="slot2" class="page-slot">Page 2 · missing</span></div>
+            <p><label for="pageChoice">This image is </label><select id="pageChoice">
+                    <option value="1">Page 1 · Q1–30</option>
+                    <option value="2">Page 2 · Q31–60</option>
+                    <option value="auto">Detect page automatically (ML)</option>
+                </select> <button type="button" id="reassign" class="secondary" disabled>Read as selected page</button>
+            </p>
+            <p><label class="btn" for="camera">Take a photo of selected page</label> <input id="camera" type="file"
+                    accept="image/*" capture="environment" style="position:absolute;width:1px;height:1px;opacity:0"></p>
+            <label for="file">Or choose up to two photos or one PDF</label><input id="file" type="file" multiple
+                accept="image/*,.pdf,application/pdf">
+            <div id="pdfnav" class="row" hidden><button class="secondary" id="prevpage" type="button">Previous
+                    page</button><span id="pagestatus"></span><button class="secondary" id="nextpage" type="button">Next
+                    page</button></div>
+            <p id="instructions">Select both photos together to detect Page 1 and Page 2 automatically, in either order.
+                For a single photo, choose its page above. Both PDF pages are collected together.
+                Alignment fits the bubbles visible in your photo; no corner clicks are needed. Blue outlines
+                show the aligned bubbles, and green outlines show selected options.</p>
+            <div class="row"><button class="secondary" id="reset" disabled>Retry automatic alignment</button><span
+                    id="pointstatus" class="muted">No image selected</span></div>
+            <canvas id="photo" hidden></canvas>
+            <p class="muted"><small>Use a PDF scan, JPG or PNG. A two-page PDF is read together. You can view either PDF
+                page above and change its assignment with “This image is”. Both page previews appear below Review and score.
+                If a HEIC photo does not open, choose JPG instead. Sheets remain on this device.</small></p>
+        </section>
+        <section class="card" id="result" hidden>
+            <h2>4. Review and score</h2>
+            <p class="note">Review student corrections first. Confirm their question numbers and replacement answers, then check the entire
+                correction section on Page 2. Confirmed corrections replace the original responses. Uncertain CNN readings
+                appear next, highlighted in yellow. The score updates as you edit.</p>
+            <div class="row"><span class="score" id="score"></span><span id="flagcount"></span>
+            </div>
+            <div id="corrections" aria-label="Student corrections"></div>
+            <p class="muted"><small>Each crop shows A, B, C, D from left to right. Confirm all accepts the current options for scanned questions. Both pages are required, including Page 2's correction section.</small></p>
+            <p class="muted">A response earns 1 point when the selected options exactly match the key.</p>
+            <div id="answers" class="answers"></div>
+            <p id="saveRequirements" class="note" role="status" aria-live="polite"></p>
+            <p class="row"><button id="confirmAll" type="button" class="secondary" disabled>Confirm all</button>
+                <button id="saveResult">Save completed result</button><button id="saveDraft"
+                    class="secondary">Save progress</button><button id="nextStudent" class="secondary">Start next
+                    student</button><button id="download" class="secondary">Download this result</button><span
+                    id="saveMessage" class="muted" role="status"></span></p>
+        </section>
+        <section class="card" id="pagePreviews" hidden>
+            <h2>5. Uploaded pages</h2>
+            <p class="muted">Both pages are shown upright. Blue outlines show bubble positions; green outlines show the current chosen options.</p>
+            <div class="page-previews">
+                <figure>
+                    <figcaption>Page 1 · Q1–30</figcaption>
+                    <canvas id="pagePreview1" aria-label="Uploaded Page 1" hidden></canvas>
+                    <p id="pageEmpty1" class="page-empty">Page 1 has not been uploaded.</p>
+                </figure>
+                <figure>
+                    <figcaption>Page 2 · Q31–60</figcaption>
+                    <canvas id="pagePreview2" aria-label="Uploaded Page 2" hidden></canvas>
+                    <p id="pageEmpty2" class="page-empty">Page 2 has not been uploaded.</p>
+                </figure>
+            </div>
+        </section>
+        <section class="card">
+            <h2>6. Saved results</h2>
+            <p>Save a completed result after review, or save incomplete progress and use Resume to finish later. Results
+                stay in this browser on this device until you delete them. Export a copy for safekeeping.</p>
+            <div class="row"><button id="exportAll">Download all results as CSV</button><span id="savedCount"
+                    class="muted"></span></div>
+            <div id="savedList"></div>
+        </section>
+    </main>
+    <div id="sheet"></div>
+    <script type="module" src="./app.js?v=11"></script>
+</body>
+
+</html>

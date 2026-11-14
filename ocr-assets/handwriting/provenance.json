@@ -1,0 +1,18 @@
+{
+  "model": "Xenova/trocr-small-handwritten",
+  "revision": "02bea33ca09a70e2e2d91140a7e6e1a729606a5b",
+  "license": "MIT",
+  "source": "https://huggingface.co/Xenova/trocr-small-handwritten",
+  "files": {
+    "config.json": "ab388d889bdead2a554fc77ae4899caabdb279318e660b457afd29394e8ee43d",
+    "generation_config.json": "cce308da91e0d656e07404c70d4b9c9f5839d426f679eff6fda6dcc0e727e3b6",
+    "preprocessor_config.json": "70da3434c33eedb3b56caf4067851741dfeed02f67576dcc3c6407c2533bfaf0",
+    "quantize_config.json": "ed9f0def3bbbf3b52891d4849aed45eecad0703770c7a6855cbcc6ba241cd1b9",
+    "special_tokens_map.json": "d5469a60db23249c7f8945013d78df30b44b6bf686c6bb4740f4223f77b1b535",
+    "tokenizer.json": "68bcb5468c854362a615f3d2ff6a5e4091a85f4c8198993ed9a30afe0b143737",
+    "tokenizer_config.json": "ce50304582ca15b925982e96dfe56548ddbaba89b584e73176d6bb3a5a0b4713",
+    "onnx/encoder_model_quantized.onnx": "2f29edbd925f8a49c9c7d1349895f960cf09d2efdc76fe23f957048d476e0d03",
+    "onnx/decoder_model_merged_quantized.onnx": "51076aa396ab5939c4668db9de901ad51765094b4c05c4c8c1f8ae2012ba1e08",
+    "README.md": "2eabc0d76f65912e7b41f593e2b7e3828aace187e8c3d5debe25bf6836755ef4"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "tesseract.js": "7.0.0",
+  "tesseract.js-core": "7.0.0",
+  "englishData": "@tesseract.js-data/eng@1.0.0/4.0.0_best_int",
+  "transformers.js": "3.8.1",
+  "onnxruntime-web": "1.22.0-dev.20250409-89f8206ba4",
+  "handwriting": {
+    "model": "Xenova/trocr-small-handwritten",
+    "revision": "02bea33ca09a70e2e2d91140a7e6e1a729606a5b",
+    "license": "MIT",
+    "source": "https://huggingface.co/Xenova/trocr-small-handwritten",
+    "files": {
+      "config.json": "ab388d889bdead2a554fc77ae4899caabdb279318e660b457afd29394e8ee43d",
+      "generation_config.json": "cce308da91e0d656e07404c70d4b9c9f5839d426f679eff6fda6dcc0e727e3b6",
+      "preprocessor_config.json": "70da3434c33eedb3b56caf4067851741dfeed02f67576dcc3c6407c2533bfaf0",
+      "quantize_config.json": "ed9f0def3bbbf3b52891d4849aed45eecad0703770c7a6855cbcc6ba241cd1b9",
+      "special_tokens_map.json": "d5469a60db23249c7f8945013d78df30b44b6bf686c6bb4740f4223f77b1b535",
+      "tokenizer.json": "68bcb5468c854362a615f3d2ff6a5e4091a85f4c8198993ed9a30afe0b143737",
+      "tokenizer_config.json": "ce50304582ca15b925982e96dfe56548ddbaba89b584e73176d6bb3a5a0b4713",
+      "onnx/encoder_model_quantized.onnx": "2f29edbd925f8a49c9c7d1349895f960cf09d2efdc76fe23f957048d476e0d03",
+      "onnx/decoder_model_merged_quantized.onnx": "51076aa396ab5939c4668db9de901ad51765094b4c05c4c8c1f8ae2012ba1e08",
+      "README.md": "2eabc0d76f65912e7b41f593e2b7e3828aace187e8c3d5debe25bf6836755ef4"
+    }
+  },
+  "sources": [
+    "https://github.com/naptha/tesseract.js",
+    "https://huggingface.co/Xenova/trocr-small-handwritten",
+    "https://github.com/huggingface/transformers.js",
+    "https://github.com/microsoft/onnxruntime"
+  ],
+  "files": {
+    "LICENSE-core": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+    "LICENSE-tesseract.js": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+    "core/tesseract-core-lstm.wasm.js": "eef5f8b2f8e20e150680b20adaec4a60babafee3adbe8a94583c81fee46e8680",
+    "core/tesseract-core-relaxedsimd-lstm.wasm.js": "861a536cf9ef8e63cb644d57bab39c388f37f7d6b6f60024b741c5f6b39a59b3",
+    "core/tesseract-core-relaxedsimd.wasm.js": "843074aa5bad1cc6421b74a86201768ced9f244795e4d81435435a61a40ce535",
+    "core/tesseract-core-simd-lstm.wasm.js": "c58b46a4c796c0b8afccf77591d5b875b6896b45d402bbce8caa6f5362447b38",
+    "core/tesseract-core-simd.wasm.js": "6b61ef4e911b5cf57e656bbfe983d6e2b3711a02dd164154ddda064566e8e09d",
+    "core/tesseract-core.wasm.js": "0bc6ce3e5fbbd0cd89706cf2fd70960e3372f4f01ee24265b26990808aaeb286",
+    "handwriting/LICENSE": "b5cb7ff7859e7d282d98fc43ab081b0dda5dc659dc3385cf65740c759a7e6a6c",
+    "handwriting/README.md": "2eabc0d76f65912e7b41f593e2b7e3828aace187e8c3d5debe25bf6836755ef4",
+    "handwriting/config.json": "ab388d889bdead2a554fc77ae4899caabdb279318e660b457afd29394e8ee43d",
+    "handwriting/generation_config.json": "cce308da91e0d656e07404c70d4b9c9f5839d426f679eff6fda6dcc0e727e3b6",
+    "handwriting/onnx/decoder_model_merged_quantized.onnx": "51076aa396ab5939c4668db9de901ad51765094b4c05c4c8c1f8ae2012ba1e08",
+    "handwriting/onnx/encoder_model_quantized.onnx": "2f29edbd925f8a49c9c7d1349895f960cf09d2efdc76fe23f957048d476e0d03",
+    "handwriting/preprocessor_config.json": "70da3434c33eedb3b56caf4067851741dfeed02f67576dcc3c6407c2533bfaf0",
+    "handwriting/provenance.json": "14ffa1f0cb003977fc866b8fd77d6031ec185f55356cbb13f6c8f356da76d642",
+    "handwriting/quantize_config.json": "ed9f0def3bbbf3b52891d4849aed45eecad0703770c7a6855cbcc6ba241cd1b9",
+    "handwriting/special_tokens_map.json": "d5469a60db23249c7f8945013d78df30b44b6bf686c6bb4740f4223f77b1b535",
+    "handwriting/tokenizer.json": "68bcb5468c854362a615f3d2ff6a5e4091a85f4c8198993ed9a30afe0b143737",
+    "handwriting/tokenizer_config.json": "ce50304582ca15b925982e96dfe56548ddbaba89b584e73176d6bb3a5a0b4713",
+    "lang/eng.traineddata.gz": "45b4cb346724ac1774f1c36f42f182b887bcdb28ebe63e6fff90ac41f3fcff91",
+    "tesseract.esm.min.js": "64871d76c75609fd5413b88a8171e2ef40deedd77d5875ba23df104b2d05eb29",
+    "tesseract.min.js.LICENSE.txt": "cdf963ced7d25a0f98901a547647b4d6e2dbe0197fd78c87a059a87b0e542fe2",
+    "transformers/LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "transformers/LICENSE-ONNX-Runtime": "b5cb7ff7859e7d282d98fc43ab081b0dda5dc659dc3385cf65740c759a7e6a6c",
+    "transformers/ort-wasm-simd-threaded.jsep.mjs": "08fb86ec433c78bfb032c5d84a68b8e8e5a8d81268fa39e24314179a5767a5b9",
+    "transformers/ort-wasm-simd-threaded.jsep.wasm": "c46655e8a94afc45338d4cb2b840475f88e5012d524509916e505079c00bfa39",
+    "transformers/transformers.min.js": "aa5002b70e789798da263f5f99c62bd3e8fcd0c119258a493c40c180648365fa",
+    "worker.min.js": "576b7df7e3393e137e51849357c9adb53fe7ac1bb69bfa06cf3d61520f182c6d",
+    "worker.min.js.LICENSE.txt": "45f54171aeaa1d10c0c1a66f374b7bba1f02472b1487fbe892eec04f840002ac"
+  }
+}

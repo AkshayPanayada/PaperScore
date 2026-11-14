@@ -1,0 +1,294 @@
+{
+  "application": "PaperScore",
+  "sourceVersion": 11,
+  "reader": "augmented-cnn",
+  "entryPoint": "index.html",
+  "privateRosterIncluded": false,
+  "files": [
+    {
+      "path": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "DEPLOY_GITHUB_PAGES.md",
+      "bytes": 5141,
+      "sha256": "5bc5ab287c0700f3d20024a7aeae7908034c52934f65aa5f27d6cdcd0c629293"
+    },
+    {
+      "path": "PaperScore_OMR_Revised.pdf",
+      "bytes": 252667,
+      "sha256": "d4919eade18eaf3c3b581c523b42e339f7378739f55eedccb7d114fd7d68be20"
+    },
+    {
+      "path": "alignment.js",
+      "bytes": 5152,
+      "sha256": "5374c02b65103de3c0b5bf64ed757dc3dc75a1d9da84e6b1239220c78585979a"
+    },
+    {
+      "path": "app.js",
+      "bytes": 44399,
+      "sha256": "482eee81edfae2b9463b62a0207109f1a46e9a3c16ab619c5b2f9857b35f6a01"
+    },
+    {
+      "path": "correction-reader.js",
+      "bytes": 3562,
+      "sha256": "468a9a747eb4b1b527963624601d0c5ba40a6bfefdcda2cf15d5b1536439f14b"
+    },
+    {
+      "path": "correction-ui.js",
+      "bytes": 10655,
+      "sha256": "587c6b1828ce7db65a3d9d9e28cec87b043d1ef2c2ded09d464e30d288ae10b7"
+    },
+    {
+      "path": "corrections.js",
+      "bytes": 7542,
+      "sha256": "03dec1a36bf4c1a11bf5322385cfa309c827f6c7dce8e3fe4eef5a3e480fd423"
+    },
+    {
+      "path": "grid.js",
+      "bytes": 5165,
+      "sha256": "1938dac56abe45cbe3a1676f2796724dba9d28d52b76c197784472ed513722bc"
+    },
+    {
+      "path": "handwriting-worker.js",
+      "bytes": 1457,
+      "sha256": "d79ce263840ad7a38f0d769dd25bb156a19c3a37b75a1809255baf77080d122c"
+    },
+    {
+      "path": "identity.js",
+      "bytes": 2210,
+      "sha256": "7eaf439b7ffc1e3a6a81289dab643fcec011abd82ffe8d6513616a93f69dad1c"
+    },
+    {
+      "path": "index.html",
+      "bytes": 16953,
+      "sha256": "e78e0c57e56c5e68f9bc01d71806b81afd672323a3919f6a21eb1573e5eae58c"
+    },
+    {
+      "path": "ml.js",
+      "bytes": 5571,
+      "sha256": "bd5d1cd8bc19f59fe2a4116488fffbf8abe55e7565e6df23da637d3fc338b9b7"
+    },
+    {
+      "path": "ocr-assets/LICENSE-core",
+      "bytes": 11358,
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+    },
+    {
+      "path": "ocr-assets/LICENSE-tesseract.js",
+      "bytes": 11357,
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    {
+      "path": "ocr-assets/core/tesseract-core-lstm.wasm.js",
+      "bytes": 3896484,
+      "sha256": "eef5f8b2f8e20e150680b20adaec4a60babafee3adbe8a94583c81fee46e8680"
+    },
+    {
+      "path": "ocr-assets/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+      "bytes": 3905767,
+      "sha256": "861a536cf9ef8e63cb644d57bab39c388f37f7d6b6f60024b741c5f6b39a59b3"
+    },
+    {
+      "path": "ocr-assets/core/tesseract-core-relaxedsimd.wasm.js",
+      "bytes": 4697227,
+      "sha256": "843074aa5bad1cc6421b74a86201768ced9f244795e4d81435435a61a40ce535"
+    },
+    {
+      "path": "ocr-assets/core/tesseract-core-simd-lstm.wasm.js",
+      "bytes": 3899472,
+      "sha256": "c58b46a4c796c0b8afccf77591d5b875b6896b45d402bbce8caa6f5362447b38"
+    },
+    {
+      "path": "ocr-assets/core/tesseract-core-simd.wasm.js",
+      "bytes": 4690932,
+      "sha256": "6b61ef4e911b5cf57e656bbfe983d6e2b3711a02dd164154ddda064566e8e09d"
+    },
+    {
+      "path": "ocr-assets/core/tesseract-core.wasm.js",
+      "bytes": 4687944,
+      "sha256": "0bc6ce3e5fbbd0cd89706cf2fd70960e3372f4f01ee24265b26990808aaeb286"
+    },
+    {
+      "path": "ocr-assets/handwriting/LICENSE",
+      "bytes": 1083,
+      "sha256": "b5cb7ff7859e7d282d98fc43ab081b0dda5dc659dc3385cf65740c759a7e6a6c"
+    },
+    {
+      "path": "ocr-assets/handwriting/README.md",
+      "bytes": 1505,
+      "sha256": "2eabc0d76f65912e7b41f593e2b7e3828aace187e8c3d5debe25bf6836755ef4"
+    },
+    {
+      "path": "ocr-assets/handwriting/config.json",
+      "bytes": 4515,
+      "sha256": "ab388d889bdead2a554fc77ae4899caabdb279318e660b457afd29394e8ee43d"
+    },
+    {
+      "path": "ocr-assets/handwriting/generation_config.json",
+      "bytes": 185,
+      "sha256": "cce308da91e0d656e07404c70d4b9c9f5839d426f679eff6fda6dcc0e727e3b6"
+    },
+    {
+      "path": "ocr-assets/handwriting/onnx/decoder_model_merged_quantized.onnx",
+      "bytes": 40527613,
+      "sha256": "51076aa396ab5939c4668db9de901ad51765094b4c05c4c8c1f8ae2012ba1e08"
+    },
+    {
+      "path": "ocr-assets/handwriting/onnx/encoder_model_quantized.onnx",
+      "bytes": 23082942,
+      "sha256": "2f29edbd925f8a49c9c7d1349895f960cf09d2efdc76fe23f957048d476e0d03"
+    },
+    {
+      "path": "ocr-assets/handwriting/preprocessor_config.json",
+      "bytes": 465,
+      "sha256": "70da3434c33eedb3b56caf4067851741dfeed02f67576dcc3c6407c2533bfaf0"
+    },
+    {
+      "path": "ocr-assets/handwriting/provenance.json",
+      "bytes": 1189,
+      "sha256": "14ffa1f0cb003977fc866b8fd77d6031ec185f55356cbb13f6c8f356da76d642"
+    },
+    {
+      "path": "ocr-assets/handwriting/quantize_config.json",
+      "bytes": 3198,
+      "sha256": "ed9f0def3bbbf3b52891d4849aed45eecad0703770c7a6855cbcc6ba241cd1b9"
+    },
+    {
+      "path": "ocr-assets/handwriting/special_tokens_map.json",
+      "bytes": 279,
+      "sha256": "d5469a60db23249c7f8945013d78df30b44b6bf686c6bb4740f4223f77b1b535"
+    },
+    {
+      "path": "ocr-assets/handwriting/tokenizer.json",
+      "bytes": 4494727,
+      "sha256": "68bcb5468c854362a615f3d2ff6a5e4091a85f4c8198993ed9a30afe0b143737"
+    },
+    {
+      "path": "ocr-assets/handwriting/tokenizer_config.json",
+      "bytes": 471,
+      "sha256": "ce50304582ca15b925982e96dfe56548ddbaba89b584e73176d6bb3a5a0b4713"
+    },
+    {
+      "path": "ocr-assets/lang/eng.traineddata.gz",
+      "bytes": 2952873,
+      "sha256": "45b4cb346724ac1774f1c36f42f182b887bcdb28ebe63e6fff90ac41f3fcff91"
+    },
+    {
+      "path": "ocr-assets/manifest.json",
+      "bytes": 4886,
+      "sha256": "d17009e28a098d92e80e16013068cbed2a62820b7cf07f1be131be7f08057d38"
+    },
+    {
+      "path": "ocr-assets/tesseract.esm.min.js",
+      "bytes": 63220,
+      "sha256": "64871d76c75609fd5413b88a8171e2ef40deedd77d5875ba23df104b2d05eb29"
+    },
+    {
+      "path": "ocr-assets/tesseract.min.js.LICENSE.txt",
+      "bytes": 149,
+      "sha256": "cdf963ced7d25a0f98901a547647b4d6e2dbe0197fd78c87a059a87b0e542fe2"
+    },
+    {
+      "path": "ocr-assets/transformers/LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "ocr-assets/transformers/LICENSE-ONNX-Runtime",
+      "bytes": 1083,
+      "sha256": "b5cb7ff7859e7d282d98fc43ab081b0dda5dc659dc3385cf65740c759a7e6a6c"
+    },
+    {
+      "path": "ocr-assets/transformers/ort-wasm-simd-threaded.jsep.mjs",
+      "bytes": 44484,
+      "sha256": "08fb86ec433c78bfb032c5d84a68b8e8e5a8d81268fa39e24314179a5767a5b9"
+    },
+    {
+      "path": "ocr-assets/transformers/ort-wasm-simd-threaded.jsep.wasm",
+      "bytes": 21596019,
+      "sha256": "c46655e8a94afc45338d4cb2b840475f88e5012d524509916e505079c00bfa39"
+    },
+    {
+      "path": "ocr-assets/transformers/transformers.min.js",
+      "bytes": 888173,
+      "sha256": "aa5002b70e789798da263f5f99c62bd3e8fcd0c119258a493c40c180648365fa"
+    },
+    {
+      "path": "ocr-assets/worker.min.js",
+      "bytes": 111307,
+      "sha256": "576b7df7e3393e137e51849357c9adb53fe7ac1bb69bfa06cf3d61520f182c6d"
+    },
+    {
+      "path": "ocr-assets/worker.min.js.LICENSE.txt",
+      "bytes": 466,
+      "sha256": "45f54171aeaa1d10c0c1a66f374b7bba1f02472b1487fbe892eec04f840002ac"
+    },
+    {
+      "path": "omr-augmented-model.json",
+      "bytes": 143272,
+      "sha256": "14ea0ccebf279ed2616641998f66e8db8ff9185ed6e46a4e5395c5bf8fb1a5ad"
+    },
+    {
+      "path": "omr-cnn-model.json",
+      "bytes": 141708,
+      "sha256": "27173bb3cffb9d245182eea47eb9a49335ddaa6ac0b8da6acfa7fceec71f0b20"
+    },
+    {
+      "path": "paperscore-assets/LICENSE",
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "paperscore-assets/pdf.mjs",
+      "bytes": 810118,
+      "sha256": "43c67d941a73a2d65be72c97f5e68d9a7963df53b219cc1c0aa85f2b8bd1c9bd"
+    },
+    {
+      "path": "paperscore-assets/pdf.worker.mjs",
+      "bytes": 2186232,
+      "sha256": "08ee175af31a8537ee0ddee910717db78c6751e2016c4ddc3f033d5047ed5aa0"
+    },
+    {
+      "path": "question-preview.js",
+      "bytes": 2107,
+      "sha256": "cc5a254f8f6a5760183aac3ac6dac1b079e7eb875ceff9aad06ba48f4cd2f99d"
+    },
+    {
+      "path": "reader.js",
+      "bytes": 7053,
+      "sha256": "0b8753abf40abb513b5aa9a7a7bbcfec1aa8b30fcbcf54a630ac582b5631d272"
+    },
+    {
+      "path": "result-state.js",
+      "bytes": 2502,
+      "sha256": "e556922df9aeb6c5e4586285d9dca42c2015ca7f1a4c4e5b39e854b6f9ae7037"
+    },
+    {
+      "path": "review.js",
+      "bytes": 1860,
+      "sha256": "8703afa5c9f8e7fac9eb29beede28dc1f72c13222a9d2fb100f69d344a782a6e"
+    },
+    {
+      "path": "roll-format.js",
+      "bytes": 3604,
+      "sha256": "937f9f19d9de5a3c7e4a02a67c1fbf2998cca3c8ad0c0174e9a7732544e1325c"
+    },
+    {
+      "path": "roll-number.js",
+      "bytes": 9149,
+      "sha256": "9aba87826228f259f83ee38d912e245ef5a2f72a88069fe9150aaa5bbf6c05e1"
+    },
+    {
+      "path": "roll-roster.js",
+      "bytes": 929,
+      "sha256": "2b15b705fbb969a0f6393728779a82f2d9639bbb5c856bb51598c46c14bed080"
+    },
+    {
+      "path": "sample-key.csv",
+      "bytes": 307,
+      "sha256": "ddb628bfb147f61b46c243b1bb086bfd8552e35fbef1e0ac5f7abf5a93a4ba8d"
+    }
+  ]
+}
