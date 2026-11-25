@@ -3,7 +3,7 @@
 import {
   locateBubble,
   SCALE
-} from './reader.js?v=11';
+} from './reader.js?v=12';
 
 export function questionCrop(h, image, page, question, width = 560) {
   const positions = [0, 1, 2, 3].map(a => locateBubble(h, page, question, a));

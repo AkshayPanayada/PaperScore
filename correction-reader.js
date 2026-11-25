@@ -6,16 +6,16 @@ import {
   fillRatio,
   projectedGray,
   SCALE
-} from './reader.js?v=11';
+} from './reader.js?v=12';
 import {
   rectifiedCrop
-} from './question-preview.js?v=11';
+} from './question-preview.js?v=12';
 import {
   prepareRollCrop
-} from './roll-number.js?v=11';
+} from './roll-number.js?v=12';
 import {
   createCorrectionSection
-} from './corrections.js?v=11';
+} from './corrections.js?v=12';
 
 export function scanCorrections(h, image, source) {
   const rows = [];

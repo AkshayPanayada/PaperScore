@@ -1,6 +1,6 @@
 import {
   classifyRectangle
-} from './ml.js?v=11';
+} from './ml.js?v=12';
 // Automatic registration with illumination-normalized components, ranked by the ML model.
 export function analyzeImage(image) {
   const {

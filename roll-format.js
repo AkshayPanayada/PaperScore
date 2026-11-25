@@ -1,6 +1,6 @@
 import {
   getRollRoster
-} from './roll-roster.js?v=11';
+} from './roll-roster.js?v=12';
 
 // Keep IDs as strings, retaining all leading zeroes. Case is normalized only;
 // visually similar characters are never silently rewritten into another ID.

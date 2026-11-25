@@ -4,10 +4,10 @@ import {
   confirmCorrection,
   ignoreCorrection,
   verifyCorrectionSection
-} from './corrections.js?v=11';
+} from './corrections.js?v=12';
 import {
   recognizeQuestionNumber
-} from './roll-number.js?v=11';
+} from './roll-number.js?v=12';
 
 const choices = ['A', 'B', 'C', 'D'];
 const node = (tag, text, className) => {

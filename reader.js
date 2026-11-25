@@ -1,13 +1,13 @@
 import {
   detectMarkers,
   analyzeImage
-} from './alignment.js?v=11';
+} from './alignment.js?v=12';
 import {
   fitMainGrid
-} from './grid.js?v=11';
+} from './grid.js?v=12';
 import {
   classifyProjected
-} from './ml.js?v=11';
+} from './ml.js?v=12';
 // The PDF uses points; normalize its width to 800 units for geometry fitting.
 // All template coordinates below come from the bundled printable PDF.
 const SCALE = 800 / 594.96,

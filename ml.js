@@ -8,7 +8,7 @@ export async function loadModel(data = null, variant = 'augmented') {
   if (model && !data && loadedVariant === variant) return model;
   if (!data) {
     const name = variant === 'augmented' ? 'omr-augmented-model.json' : 'omr-cnn-model.json';
-    const response = await fetch(new URL(`./${name}?v=11`, import.meta.url), {
+    const response = await fetch(new URL(`./${name}?v=12`, import.meta.url), {
       cache: 'no-cache'
     });
     if (!response.ok) throw Error('The ML reader could not load. Reload the page and try again.');

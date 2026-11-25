@@ -11,52 +11,52 @@ import {
   locateBubble,
   locateCorrection,
   fillRatio
-} from './reader.js?v=11';
+} from './reader.js?v=12';
 import {
   loadModel
-} from './ml.js?v=11';
+} from './ml.js?v=12';
 import {
   resultState
-} from './result-state.js?v=11';
+} from './result-state.js?v=12';
 import {
   readQuestion,
   confirmAllAnswers
-} from './review.js?v=11';
+} from './review.js?v=12';
 import {
   questionCrop,
   pageRaster
-} from './question-preview.js?v=11';
+} from './question-preview.js?v=12';
 import {
   rollCrop,
   rollPreview,
   recognizeRollNumber
-} from './roll-number.js?v=11';
+} from './roll-number.js?v=12';
 import {
   createIdentity,
   editRollNumber,
   confirmRollNumber,
   mergeRollReading,
   studentLabel
-} from './identity.js?v=11';
+} from './identity.js?v=12';
 import {
   createCorrectionSection,
   editCorrection,
   effectiveResponses,
   correctionAudit
-} from './corrections.js?v=11';
+} from './corrections.js?v=12';
 import {
   scanCorrections
-} from './correction-reader.js?v=11';
+} from './correction-reader.js?v=12';
 import {
   renderCorrectionPanel
-} from './correction-ui.js?v=11';
+} from './correction-ui.js?v=12';
 import {
   getRollRoster,
   setRollRoster
-} from './roll-roster.js?v=11';
+} from './roll-roster.js?v=12';
 import {
   resolveRollReadings
-} from './roll-format.js?v=11';
+} from './roll-format.js?v=12';
 
 const $ = s => document.querySelector(s),
   choices = ['A', 'B', 'C', 'D'];

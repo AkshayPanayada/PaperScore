@@ -23,22 +23,22 @@
     {
       "path": "alignment.js",
       "bytes": 5161,
-      "sha256": "e39cb56fc2ed87c8ab0f2092fed08022bc57760449fe740dee0bf0581c3dd840"
+      "sha256": "89786be62636efb3ef62a23765ca3cfcaa2a68bc3e14800dbd37c243f9d8ad9b"
     },
     {
       "path": "app.js",
       "bytes": 43568,
-      "sha256": "178a59510e644448108829d7aed78819c89e912266d384d4ea161eeea60961b8"
+      "sha256": "3e4ef069d62b00344f349a95d98f9af1a1df1e7694f45990a87dbbef16ade34b"
     },
     {
       "path": "correction-reader.js",
       "bytes": 3562,
-      "sha256": "468a9a747eb4b1b527963624601d0c5ba40a6bfefdcda2cf15d5b1536439f14b"
+      "sha256": "fe5ad899f2da63b58aba09e2c952fcebf408aa57a462df33ce8d319cebecae46"
     },
     {
       "path": "correction-ui.js",
       "bytes": 10831,
-      "sha256": "ef63b98e0ed8f390e1120c90af0a653bd2b5eeaaf4267bf9a144ebfb901a2e7a"
+      "sha256": "afbb5ed3f6948e5248f09ccd3273809090aa070e3483e9a1ba2be38479e0cac4"
     },
     {
       "path": "corrections.js",
@@ -63,12 +63,12 @@
     {
       "path": "index.html",
       "bytes": 16977,
-      "sha256": "eefa118c57a7a237d6819f2eae10926d38b9b918b3e88e0b3c05aee47b95c482"
+      "sha256": "4254f40d6563f048e8894c5ffc102e87e94197a347490f2372bd2a523850f38f"
     },
     {
       "path": "ml.js",
       "bytes": 5571,
-      "sha256": "bd5d1cd8bc19f59fe2a4116488fffbf8abe55e7565e6df23da637d3fc338b9b7"
+      "sha256": "d475f53f24eb232db5e4e85b12e761da6a0a62acd5adc55d3f168b1ad26e5430"
     },
     {
       "path": "ocr-assets/LICENSE-core",
@@ -253,32 +253,32 @@
     {
       "path": "question-preview.js",
       "bytes": 2129,
-      "sha256": "2138e497510531312ba0fe43e0b49f332484cafe4e1d17a94ca28e1f991a0b14"
+      "sha256": "0e8eee88e1db8aa9db9afe31372b03f75236d9b8f37d4757e143cd70914aed84"
     },
     {
       "path": "reader.js",
       "bytes": 7053,
-      "sha256": "0b8753abf40abb513b5aa9a7a7bbcfec1aa8b30fcbcf54a630ac582b5631d272"
+      "sha256": "0fa0498093f4020e176dd8577f2853c19a7ec03a6948f0b5759967498e77009e"
     },
     {
       "path": "result-state.js",
       "bytes": 2502,
-      "sha256": "e556922df9aeb6c5e4586285d9dca42c2015ca7f1a4c4e5b39e854b6f9ae7037"
+      "sha256": "561e13826e008d56f75287ec51eb6c2becc9a35f5889b307b1bb02382d8eb559"
     },
     {
       "path": "review.js",
       "bytes": 1860,
-      "sha256": "8703afa5c9f8e7fac9eb29beede28dc1f72c13222a9d2fb100f69d344a782a6e"
+      "sha256": "52efdd460dbd1f3cde6a9595844b9cb8370c3fce0035528fa7f19ead2e36123e"
     },
     {
       "path": "roll-format.js",
       "bytes": 3604,
-      "sha256": "937f9f19d9de5a3c7e4a02a67c1fbf2998cca3c8ad0c0174e9a7732544e1325c"
+      "sha256": "fc266c919b67f28e7fe938ce283ea36897c281c3efa657a69628c061c4b19dcc"
     },
     {
       "path": "roll-number.js",
       "bytes": 9149,
-      "sha256": "9aba87826228f259f83ee38d912e245ef5a2f72a88069fe9150aaa5bbf6c05e1"
+      "sha256": "893c82ade31b9ff63a1b8c19295162782a3756453aacdc2782195b40539e0884"
     },
     {
       "path": "roll-roster.js",

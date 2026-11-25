@@ -1,7 +1,7 @@
 import {
   correctionIssues,
   createCorrectionSection
-} from './corrections.js?v=11';
+} from './corrections.js?v=12';
 // Keep an incomplete scan distinct from a completed grade.
 export function resultState({
   name = '',

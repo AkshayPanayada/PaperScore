@@ -3,11 +3,11 @@
 import {
   projectedGray,
   SCALE
-} from './reader.js?v=11';
+} from './reader.js?v=12';
 import {
   normalizeRoll,
   resolveRollReadings
-} from './roll-format.js?v=11';
+} from './roll-format.js?v=12';
 const fields = {
   1: {
     x: 95,
@@ -197,7 +197,7 @@ const handwritingJobs = new Map();
 
 function handwrittenReading(crop) {
   if (!handwritingWorker) {
-    handwritingWorker = new Worker(new URL('./handwriting-worker.js?v=11', import.meta.url), {
+    handwritingWorker = new Worker(new URL('./handwriting-worker.js?v=12', import.meta.url), {
       type: 'module'
     });
     handwritingWorker.onmessage = ({

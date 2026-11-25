@@ -4,7 +4,7 @@ import {
   classify,
   fillRatio,
   locateBubble
-} from './reader.js?v=11';
+} from './reader.js?v=12';
 const choices = ['A', 'B', 'C', 'D'];
 
 // Mutate the shared page entries so confirmation survives uploading another
