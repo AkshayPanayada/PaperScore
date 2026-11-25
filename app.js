@@ -854,7 +854,7 @@ function render(refreshPanel = true) {
       const crop = document.createElement('img');
       crop.className = 'response-crop';
       crop.src = response.preview;
-      crop.alt = `Student response for question ${question}; options A, B, C, D from left to right`;
+      crop.alt = `Student response for question ${question}; question number on the left, options A, B, C, D from left to right`;
       fieldset.insertBefore(crop, options);
     } else {
       const placeholder = document.createElement('p');
@@ -1040,13 +1040,15 @@ function resumeDraft(rec) {
   }
   drawPagePreviews();
   correctionSection = rec.correctionSection || createCorrectionSection();
-  // Older drafts lack a correction-section approval and must be inspected.
+  // Older drafts have no saved correction scan or proof that its bounds were
+  // visible. A full-page thumbnail cannot establish this: require Page 2 again.
   if (!rec.correctionSection && pages.has(2)) {
     const source = 'legacy:' + rec.id;
     correctionSection = {
       ...createCorrectionSection(),
       scanned: true,
-      visible: true,
+      visible: false,
+      requiresRescan: true,
       source,
       preview: (rec.pagePreviews || []).find(([page]) => page === 2)?.[1]?.base || '',
       rows: Array.from({
@@ -1228,27 +1230,34 @@ function csvSafe(x) {
   return '"' + t.replaceAll('"', '""') + '"'
 }
 
-function exportCorrectionAudit(section) {
-  return JSON.stringify(correctionAudit(section || createCorrectionSection(), false));
+const csvHeader = ['Roll number', 'Total score', ...Array.from({
+  length: 60
+}, (_, i) => 'Q' + (i + 1))];
+
+function csvAnswers(answers) {
+  return Array.from({
+    length: 60
+  }, (_, i) => answers[i] ?? '');
 }
+
 $('#exportAll').onclick = () => {
   if (!saved.length) {
     alert('No saved results yet.');
     return
   }
   const rows = [
-    ['Student', 'Roll number', 'Status', 'Score', 'Scanned questions', 'Total questions', 'Pages received', 'Flagged at save', 'Saved at', 'Corrections audit', 'Answer sources', 'Original CNN answers', ...Array.from({
-      length: 60
-    }, (_, i) => 'Q' + (i + 1))], ...saved.map(r => [r.name, r.rollNumber || '', r.status === 'draft' ? 'Incomplete' : 'Complete', r.score, r.scannedQuestions ?? r.total, r.total, (r.pagesReceived || []).join('+'), r.flags, r.savedAt, exportCorrectionAudit(r.correctionSection), JSON.stringify(r.answerSources || []), JSON.stringify((r.baseResponses || []).map(row => row.detectedSelected ?? null)), ...r.answers])
+    csvHeader,
+    ...saved.map(r => [r.rollNumber || '', r.score, ...csvAnswers(r.answers || [])])
   ];
   downloadCsv(rows, 'paperscore-all-results.csv');
 };
 showSaved();
 $('#download').onclick = () => {
   const state = currentResultState();
+  const answers = results.map(r => r.missing ? 'Not uploaded' : r.selected || 'Blank');
   const rows = [
-    ['Student', 'Roll number', 'Status', 'Score', 'Scanned questions', 'Total questions', 'Unreviewed answers', 'Corrections audit', 'Answer sources', 'Original CNN answers', ...results.map((_, i) => 'Q' + (i + 1))],
-    [$('#student').value, identity.rollNumber, state.canFinalize ? 'Complete' : 'Incomplete', state.score, state.scanned, count, state.flagged.length, exportCorrectionAudit(correctionSection), JSON.stringify(results.map(row => row.answerSource === 'correction' ? `correction row ${row.correctionRow}` : 'main')), JSON.stringify(baseResponses().map(row => row.detectedSelected ?? null)), ...results.map(r => r.missing ? 'Not uploaded' : r.selected || 'Blank')]
+    csvHeader,
+    [identity.rollNumber || '', state.score, ...csvAnswers(answers)]
   ];
   downloadCsv(rows, 'paperscore-result.csv');
 };

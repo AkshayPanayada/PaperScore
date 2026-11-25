@@ -39,7 +39,8 @@ export function renderCorrectionPanel({
   }
   box.append(node('p', 'Inspect all ten rows. Confirm each correction’s question number and replacement options, then confirm the whole section.', 'note'));
   if (section.preview) box.append(picture(section.preview, 'Complete correction section, including all ten rows'));
-  if (!section.visible) box.append(node('p', 'The correction section is clipped. Upload a complete Page 2 before final saving.', 'error'));
+  if (section.requiresRescan) box.append(node('p', 'This older draft has no correction-section scan. Re-upload Page 2 to inspect and confirm its corrections.', 'error'));
+  else if (!section.visible) box.append(node('p', 'The correction section is clipped. Upload a complete Page 2 before final saving.', 'error'));
   else if (!section.reliable) box.append(node('p', 'Correction-grid alignment is uncertain. Inspect the full page and add any correction the reader missed.', 'note'));
   if (section.identityReviewRequired) box.append(node('p', 'The original answer page changed. Verify that both pages belong to the same student before confirming this section.', 'note'));
   const status = node('p', null, 'statusline');

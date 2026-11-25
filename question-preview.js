@@ -8,7 +8,7 @@ import {
 export function questionCrop(h, image, page, question, width = 560) {
   const positions = [0, 1, 2, 3].map(a => locateBubble(h, page, question, a));
   const radius = Math.max(...positions.map(p => p.r));
-  const left = Math.min(...positions.map(p => p.x)) - radius * 1.4;
+  const left = Math.min(...positions.map(p => p.x)) - Math.max(radius * 5.2, 56 * SCALE);
   const right = Math.max(...positions.map(p => p.x)) + radius * 1.4;
   const top = Math.min(...positions.map(p => p.y)) - radius * 1.3;
   const bottom = Math.max(...positions.map(p => p.y)) + radius * 1.3;

@@ -22,13 +22,13 @@
     },
     {
       "path": "alignment.js",
-      "bytes": 5152,
-      "sha256": "5374c02b65103de3c0b5bf64ed757dc3dc75a1d9da84e6b1239220c78585979a"
+      "bytes": 5161,
+      "sha256": "e39cb56fc2ed87c8ab0f2092fed08022bc57760449fe740dee0bf0581c3dd840"
     },
     {
       "path": "app.js",
-      "bytes": 44399,
-      "sha256": "482eee81edfae2b9463b62a0207109f1a46e9a3c16ab619c5b2f9857b35f6a01"
+      "bytes": 43568,
+      "sha256": "178a59510e644448108829d7aed78819c89e912266d384d4ea161eeea60961b8"
     },
     {
       "path": "correction-reader.js",
@@ -37,8 +37,8 @@
     },
     {
       "path": "correction-ui.js",
-      "bytes": 10655,
-      "sha256": "587c6b1828ce7db65a3d9d9e28cec87b043d1ef2c2ded09d464e30d288ae10b7"
+      "bytes": 10831,
+      "sha256": "ef63b98e0ed8f390e1120c90af0a653bd2b5eeaaf4267bf9a144ebfb901a2e7a"
     },
     {
       "path": "corrections.js",
@@ -47,8 +47,8 @@
     },
     {
       "path": "grid.js",
-      "bytes": 5165,
-      "sha256": "1938dac56abe45cbe3a1676f2796724dba9d28d52b76c197784472ed513722bc"
+      "bytes": 11511,
+      "sha256": "16d9657cf80902e7e3a38aef00c9e5fcc0c667a097fbbf11d2bb784c1045ee36"
     },
     {
       "path": "handwriting-worker.js",
@@ -62,8 +62,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 16953,
-      "sha256": "e78e0c57e56c5e68f9bc01d71806b81afd672323a3919f6a21eb1573e5eae58c"
+      "bytes": 16977,
+      "sha256": "eefa118c57a7a237d6819f2eae10926d38b9b918b3e88e0b3c05aee47b95c482"
     },
     {
       "path": "ml.js",
@@ -252,8 +252,8 @@
     },
     {
       "path": "question-preview.js",
-      "bytes": 2107,
-      "sha256": "cc5a254f8f6a5760183aac3ac6dac1b079e7eb875ceff9aad06ba48f4cd2f99d"
+      "bytes": 2129,
+      "sha256": "2138e497510531312ba0fe43e0b49f332484cafe4e1d17a94ca28e1f991a0b14"
     },
     {
       "path": "reader.js",

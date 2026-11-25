@@ -38,7 +38,7 @@ export function observedCircles(h, components) {
 
 // Cluster nearby components into rows, then search for a regularly spaced
 // lattice. A row needs at least five of eight option circles as evidence.
-function fit(circles, xs, n, minY, maxY, minPitch, maxPitch) {
+function fit(circles, xs, n, minY, maxY, minPitch, maxPitch, labelPoints = null) {
   const candidates = [];
   for (const p of circles) {
     if (p.y < minY * S || p.y > maxY * S) continue;
@@ -77,42 +77,99 @@ function fit(circles, xs, n, minY, maxY, minPitch, maxPitch) {
       count: cols.filter(Boolean).length
     };
   }).filter(g => g.count >= 5).sort((a, b) => a.y - b.y);
+  const matchLattice = (startY, pitch, tol = .23) => {
+    const chosen = [];
+    let score = 0;
+    for (let row = 0; row < n; row++) {
+      const target = startY + row * pitch;
+      const match = rows.filter(r => Math.abs(r.y - target) < pitch * tol).sort((a, b) => Math.abs(a.y - target) - Math.abs(b.y - target))[0];
+      if (match) {
+        chosen.push(match);
+        score += match.count - Math.abs(match.y - target) / pitch;
+      } else {
+        chosen.push(null);
+        score -= 8;
+      }
+    }
+    return {
+      chosen,
+      score
+    };
+  };
   // Allow one missing row, but penalize it heavily; estimate its positions
   // later so the UI can mark those inferred answers for manual review.
   let best = null;
-  for (const start of rows)
-    for (const next of rows) {
-      const pitch = next.y - start.y;
-      if (pitch < minPitch * S || pitch > maxPitch * S) continue;
-      const chosen = [];
-      let score = 0;
-      for (let row = 0; row < n; row++) {
-        const target = start.y + row * pitch;
-        const match = rows.filter(r => Math.abs(r.y - target) < pitch * .23).sort((a, b) => Math.abs(a.y - target) - Math.abs(b.y - target))[0];
-        if (match) {
-          chosen.push(match);
-          score += match.count - Math.abs(match.y - target) / pitch
-        } else {
-          chosen.push(null);
-          score -= 8
+  for (let i = 0; i < rows.length; i++)
+    for (let j = i + 1; j < rows.length; j++) {
+      const dy = rows[j].y - rows[i].y;
+      const minStep = Math.max(1, Math.ceil(dy / (maxPitch * S)));
+      const maxStep = Math.min(n - 1, Math.floor(dy / (minPitch * S)));
+      for (let step = minStep; step <= maxStep; step++) {
+        let pitch = dy / step,
+          startY = rows[i].y;
+        let {
+          chosen,
+          score
+        } = matchLattice(startY, pitch, .23);
+        if (chosen.filter(Boolean).length < n - 1) continue;
+        // Refine startY and pitch across all matched rows so slight top/bottom curl
+        // does not reject the first or last row.
+        const pts = chosen.flatMap((r, idx) => r ? [[idx, r.y]] : []);
+        const meanR = pts.reduce((s, [r]) => s + r, 0) / pts.length;
+        const meanY = pts.reduce((s, [, y]) => s + y, 0) / pts.length;
+        const denom = pts.reduce((s, [r]) => s + (r - meanR) ** 2, 0);
+        if (denom > 0) {
+          const regPitch = pts.reduce((s, [r, y]) => s + (r - meanR) * (y - meanY), 0) / denom;
+          if (regPitch >= minPitch * S && regPitch <= maxPitch * S) {
+            pitch = regPitch;
+            startY = meanY - pitch * meanR;
+            ({
+              chosen,
+              score
+            } = matchLattice(startY, pitch, .25));
+            if (chosen.filter(Boolean).length < n - 1) continue;
+          }
         }
+        if (!best || score > best.score) best = {
+          rows: chosen,
+          score,
+          pitch,
+          startY
+        };
       }
-      if (chosen.filter(Boolean).length < n - 1) continue;
-      if (!best || score > best.score) best = {
-        rows: chosen,
-        score,
-        pitch,
-        startY: start.y
-      };
     }
   if (!best) return null;
+  // If only n-1 rows matched and the missing slot was placed at the bottom,
+  // check whether circles or question labels indicate the missing row is at the top.
+  if (best.rows[0] && !best.rows[n - 1]) {
+    const topY = best.startY - best.pitch,
+      botY = best.startY + (n - 1) * best.pitch;
+    if (topY >= minY * S) {
+      const nearCircles = y => candidates.filter(p => Math.abs(p.y - y) < 4.5 * S).length;
+      const nearLabels = y => {
+        if (!labelPoints) return 0;
+        const col0 = xs[0] * S,
+          col4 = xs[4] * S;
+        return labelPoints.filter(p => Math.abs(p.y - y) < .4 * best.pitch && ((p.x > col0 - 45 * S && p.x < col0 - 14 * S) || (p.x > col4 - 45 * S && p.x < col4 - 14 * S))).length;
+      };
+      if (nearCircles(topY) + 2 * nearLabels(topY) > nearCircles(botY) + 2 * nearLabels(botY)) {
+        best.rows = [null, ...best.rows.slice(0, n - 1)];
+        best.startY = topY;
+      }
+    }
+  }
   const radius = median(best.rows.filter(Boolean).flatMap(row => row.cols.filter(Boolean).map(p => p.r)));
-  const centers = best.rows.map((row, i) => xs.map((x, col) => row?.cols[col] || {
-    x: x * S,
-    y: row?.y ?? best.startY + i * best.pitch,
-    r: radius,
-    inferred: true
-  }));
+  const centers = best.rows.map((row, i) => {
+    const targetY = row?.y ?? best.startY + i * best.pitch;
+    return xs.map((x, col) => row?.cols[col] || {
+      ...(candidates.filter(p => p.col === col && Math.abs(p.y - targetY) < 4.5 * S).sort((a, b) => Math.abs(a.y - targetY) - Math.abs(b.y - targetY))[0] || {
+        x: x * S,
+        y: targetY,
+        r: radius
+      }),
+      inferred: true
+    });
+  });
   return {
     ...best,
     centers,
@@ -120,12 +177,122 @@ function fit(circles, xs, n, minY, maxY, minPitch, maxPitch) {
     coverage: best.rows.reduce((s, r) => s + (r?.count || 0), 0) / (n * xs.length)
   };
 }
+const DEFAULT_MAIN_XS = [78.129, 121.285, 164.442, 207.599, 349.719, 392.875, 436.032, 479.189];
+const DEFAULT_CORR_XS = [156.257, 189.741, 223.225, 256.708, 424.127, 457.61, 491.094, 524.578];
+
+// Infer two evenly spaced 4-column blocks when printed sheets use wider bubble spacing.
+function inferColumns(circles, minY, maxY, minCount) {
+  const inBand = circles.filter(p => p.y >= minY * S && p.y <= maxY * S);
+  if (inBand.length < minCount * 4) return null;
+  const typicalRadius = median(inBand.map(p => p.r));
+  const rings = inBand.filter(p => p.r > typicalRadius * .78 && p.r < typicalRadius * 1.32);
+  if (rings.length < minCount * 4) return null;
+  const clusters = [];
+  for (const p of [...rings].sort((a, b) => a.x - b.x)) {
+    const last = clusters.at(-1);
+    if (!last || p.x - last.x > 8 * S) clusters.push({
+      pts: [p],
+      x: p.x
+    });
+    else {
+      last.pts.push(p);
+      last.x = median(last.pts.map(q => q.x));
+    }
+  }
+  const cols = clusters.filter(c => c.pts.length >= minCount).map(c => c.x / S);
+  const quads = arr => {
+    const out = [];
+    for (let a = 0; a < arr.length; a++)
+      for (let b = a + 1; b < arr.length; b++)
+        for (let c = b + 1; c < arr.length; c++)
+          for (let d = c + 1; d < arr.length; d++) {
+            const q = [arr[a], arr[b], arr[c], arr[d]];
+            const gaps = [q[1] - q[0], q[2] - q[1], q[3] - q[2]];
+            const dx = (gaps[0] + gaps[1] + gaps[2]) / 3;
+            if (dx < 25 || dx > 85) continue;
+            if (Math.max(...gaps.map(g => Math.abs(g - dx))) > 8) continue;
+            const err = gaps.reduce((s, g) => s + Math.abs(g - dx), 0);
+            if (err < 12) out.push({
+              xs: q,
+              dx,
+              err
+            });
+          }
+    return out;
+  };
+  const left = quads(cols.filter(x => x < 297.5)),
+    right = quads(cols.filter(x => x >= 297.5));
+  let best = null,
+    bestScore = Infinity;
+  for (const l of left)
+    for (const r of right) {
+      const diff = Math.abs(l.dx - r.dx);
+      if (diff > 6) continue;
+      const score = l.err + r.err + 2 * diff;
+      if (score < bestScore) {
+        bestScore = score;
+        best = [...l.xs, ...r.xs];
+      }
+    }
+  return best;
+}
+
+// Question numbers sit to the left of each block; reject 180-degree flips on symmetric layouts.
+function isUprightGrid(labelPoints, grid) {
+  const col0 = grid.centers[0][0].x,
+    col3 = grid.centers[0][3].x,
+    col4 = grid.centers[0][4].x,
+    col7 = grid.centers[0][7].x;
+  const minY = grid.startY - .5 * grid.pitch,
+    maxY = grid.startY + 14.5 * grid.pitch;
+  let leftLabels = 0,
+    rightLabels = 0;
+  for (const {
+      x,
+      y
+    }
+    of labelPoints) {
+    if (y < minY || y > maxY) continue;
+    if ((x > col0 - 45 * S && x < col0 - 14 * S) || (x > col4 - 45 * S && x < col4 - 14 * S)) leftLabels++;
+    if ((x > col3 + 14 * S && x < col3 + 45 * S) || (x > col7 + 14 * S && x < col7 + 45 * S)) rightLabels++;
+  }
+  return leftLabels + rightLabels < 5 || rightLabels <= leftLabels + 2;
+}
+
 // Main answers form 15 rows. Page 2 may also contain a separate five-row
 // correction grid beneath them; do not let those rows change the main pitch.
 export function fitMainGrid(h, components) {
-  const circles = observedCircles(h, components),
-    grid = fit(circles, [78.129, 121.285, 164.442, 207.599, 349.719, 392.875, 436.032, 479.189], 15, 80, 760, 20, 37);
-  if (!grid || grid.coverage < .8) return null;
-  grid.corrections = fit(circles, [156.257, 189.741, 223.225, 256.708, 424.127, 457.61, 491.094, 524.578], 5, (grid.rows.at(-1)?.y ?? grid.startY + 14 * grid.pitch) / S + 15, 790, 25, 60);
+  const circles = observedCircles(h, components);
+  const inv = inverse(h),
+    labelPoints = components.map(c => {
+      const [x, y] = project(inv, c.x, c.y);
+      return {
+        x,
+        y
+      };
+    });
+  let grid = fit(circles, DEFAULT_MAIN_XS, 15, 80, 760, 20, 37, labelPoints);
+  if (!grid || grid.coverage < .95) {
+    for (const maxY of [500, 760]) {
+      const xs = inferColumns(circles, 80, maxY, 7);
+      if (!xs) continue;
+      const candidate = fit(circles, xs, 15, 80, 760, 20, 37, labelPoints);
+      if (candidate && candidate.coverage > (grid?.coverage || 0)) {
+        grid = candidate;
+        break;
+      }
+    }
+  }
+  if (!grid || grid.coverage < .8 || !isUprightGrid(labelPoints, grid)) return null;
+  const corrMinY = (grid.rows.at(-1)?.y ?? grid.startY + 14 * grid.pitch) / S + 15;
+  let corrections = fit(circles, DEFAULT_CORR_XS, 5, corrMinY, 790, 25, 60);
+  if (!corrections || corrections.coverage < .95) {
+    const corrXs = inferColumns(circles, corrMinY, 790, 3);
+    if (corrXs) {
+      const candidate = fit(circles, corrXs, 5, corrMinY, 790, 25, 60);
+      if (candidate && candidate.coverage > (corrections?.coverage || 0)) corrections = candidate;
+    }
+  }
+  grid.corrections = corrections;
   return grid;
 }

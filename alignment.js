@@ -136,7 +136,7 @@ export function detectMarkers(image, analysis = analyzeImage(image)) {
             return s + p.x * q.y - q.x * p.y
           }, 0)) / 2;
           if (area < width * height * .13) continue;
-          const score = pts.reduce((s, p) => s + p.confidence, 0) + area / (width * height) - .2 * (ratio - 1);
+          const score = 2 * pts.reduce((s, p) => s + p.confidence, 0) + .5 * area / (width * height) - .3 * (ratio - 1);
           if (!best || score > best.score) best = {
             score,
             points: pts.map(p => [p.x, p.y])
